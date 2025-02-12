@@ -17,7 +17,17 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+  passwords PasswordHistory[]
+}
+
+model PasswordHistory {
+  id          String  @id @default(uuid())
+  userId      String
+  password    String
+  description String
+  createdAt   DateTime @default(now())
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
