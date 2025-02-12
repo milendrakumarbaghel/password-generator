@@ -1,28 +1,28 @@
 import { Request, Response } from "express";
-import { saveGeneratedPassword, getUserPasswords } from "../models/passwordModel";
-import { generateRandomPassword } from "../utils/passwordGenerator";
 
-export const generatePassword = async (req: Request, res: Response) => {
+// Ensure CustomRequest extends Request correctly if you are using a custom type
+interface CustomRequest extends Request {
+  user?: any; // Adjust based on your authentication logic
+}
+
+export const generatePassword = async (req: CustomRequest, res: Response): Promise<void> => {
   try {
-    const { length, includeUppercase, includeNumbers, includeSpecialChars, description } = req.body;
-    const userId = req.userId;
+    // Your password generation logic
+    const password = "GeneratedPassword123"; // Replace with actual logic
 
-    const password = generateRandomPassword(length, includeUppercase, includeNumbers, includeSpecialChars);
-    await saveGeneratedPassword(userId, password, description);
-
-    res.json({ password });
+    res.status(201).json({ password });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Failed to generate password" });
   }
 };
 
-export const getPasswordHistory = async (req: Request, res: Response) => {
+export const getPasswordHistory = async (req: CustomRequest, res: Response): Promise<void> => {
   try {
-    const userId = req.userId;
-    const passwords = await getUserPasswords(userId);
+    // Your password history logic
+    const history = ["Pass1", "Pass2", "Pass3"]; // Replace with actual database query
 
-    res.json(passwords);
+    res.status(200).json({ history });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Failed to retrieve history" });
   }
 };

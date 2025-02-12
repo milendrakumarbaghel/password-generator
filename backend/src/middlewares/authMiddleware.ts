@@ -5,19 +5,21 @@ interface CustomRequest extends Request {
   userId?: string;
 }
 
-const authMiddleware = (req: CustomRequest, res: Response, next: NextFunction) => {
+const authMiddleware = (req: CustomRequest, res: Response, next: NextFunction): void => {
   const token = req.header("Authorization")?.replace("Bearer ", "");
 
   if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
+    res.status(401).json({ error: "Unauthorized" });
+    return; // ✅ Ensure function exits
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
     req.userId = decoded.userId;
-    next();
+    next(); // ✅ Correctly call next()
   } catch {
     res.status(401).json({ error: "Invalid token" });
+    return; // ✅ Ensure function exits
   }
 };
 
