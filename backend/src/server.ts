@@ -15,36 +15,22 @@ const PORT = process.env.PORT || 4000;
 app.use("/auth", authRoutes);
 app.use("/password", passwordRoutes);
 
-// // Function to check database connection
-// const testDatabaseConnection = async () => {
-//   try {
-//     await prisma.$connect();
-//     console.log("✅ Connected to PostgreSQL successfully!");
-//   } catch (error) {
-//     console.error("❌ Failed to connect to PostgreSQL:", error);
-//     process.exit(1); // Exit process on failure
-//   }
-// };
-
-// Call the test function
-// testDatabaseConnection();
-
-// Test database connection
-app.get("/test-db", async (req: Request, res: Response) => {
+// Function to check database connection
+const testDatabaseConnection = async () => {
   try {
     await prisma.$connect();
-    res.json({ message: "Connected to PostgreSQL 🎉" });
+    console.log("✅ Connected to PostgreSQL successfully!");
   } catch (error) {
-    res.status(500).json({ error: "Database connection failed" });
+    console.error("❌ Failed to connect to PostgreSQL:", error);
+    process.exit(1); // Exit process on failure
   }
-});
+};
+
+// Call the test function
+testDatabaseConnection();
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, TypeScript with Express!");
 });
-
-// app.listen(PORT, () => {
-//   console.log(`🚀 Server running on port ${PORT}`);
-// });
 
 app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
