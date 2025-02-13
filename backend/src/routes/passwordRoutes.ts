@@ -1,6 +1,6 @@
 import express from "express";
 import { generatePassword, getPasswordHistory } from "../controllers/passwordController";
-import authMiddleware from "../middlewares/authMiddleware"; // Ensure this middleware is correctly implemented
+import authMiddleware from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
