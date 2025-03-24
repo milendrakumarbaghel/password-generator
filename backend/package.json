@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/script.ts",
+    "dev": "nodemon dist/script.js",
     "generate": "dotenv -e .env -- npx prisma generate",
     "migrate": "dotenv -e .env -- npx prisma migrate dev"
   },
