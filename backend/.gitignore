@@ -1,4 +1,5 @@
 node_modules
+temp
 .env
 dist
 
@@ -28,3 +29,5 @@ dist-ssr
 *.sw?
 coverage
 *.tsbuildinfo
+
+tmp/

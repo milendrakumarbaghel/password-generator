@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon dist/script.js",
-    "generate": "dotenv -e .env -- npx prisma generate",
-    "migrate": "dotenv -e .env -- npx prisma migrate dev"
+    "build": "tsc",
+    "start": "npx appmap-node node dist/server.js",
+    "dev": "npx appmap-node npm run build && node dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -21,15 +21,19 @@
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "@appland/appmap": "^3.187.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.8",
-    "@types/node": "^22.13.1",
+    "@types/node": "^22.13.14",
     "cross-env": "^7.0.3",
     "nodemon": "^3.1.9",
     "prisma": "^6.3.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
+  },
+  "compilerOptions": {
+    "module": "CommonJS"
   }
 }
