@@ -5,7 +5,7 @@ import { CustomRequest } from "../utils/types"; // Importing a single source of 
 
 export const generatePassword = async (req: CustomRequest, res: Response): Promise<void> => {
   try {
-    const { length, includeUppercase, includeNumbers, includeSpecialChars } = req.body;
+  const { length, includeUppercase, includeNumbers, includeSpecialChars, description } = req.body;
 
     // Validate input parameters
     if (!length || typeof length !== "number" || length < 6) {
@@ -18,21 +18,27 @@ export const generatePassword = async (req: CustomRequest, res: Response): Promi
       return;
     }
 
+    // Require non-empty description
+    if (typeof description !== "string" || description.trim().length === 0) {
+      res.status(400).json({ error: "Description is required and must be a non-empty string." });
+      return;
+    }
+
     // Generate password dynamically based on request parameters
     const password = generateRandomPassword(length, includeUppercase, includeNumbers, includeSpecialChars);
 
     // Store the generated password in the database (Optional)
     if (req.user && req.user.id) {
-      await prisma.passwordHistory.create({
+    await prisma.passwordHistory.create({
         data: {
           userId: req.user.id,
           password,
-          description: "Generated password",
+          description: description.trim(),
         },
       });
     }
 
-    res.status(201).json({ password });
+  res.status(201).json({ password });
   } catch (error) {
     console.error("Error generating password:", error);
     res.status(500).json({ error: "Failed to generate password" });

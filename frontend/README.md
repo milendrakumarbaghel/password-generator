@@ -1,3 +1,16 @@
+Frontend (React + TS) for Password Generator
+
+Setup
+- Copy .env.example to .env and adjust VITE_API_BASE_URL if needed
+- Install deps and start dev server
+
+Scripts
+- npm install
+- npm run dev
+
+Tech
+- React, TypeScript, Vite, Redux Toolkit, React Router, Axios
+- TailwindCSS, React Hook Form, Zod, react-hot-toast
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
